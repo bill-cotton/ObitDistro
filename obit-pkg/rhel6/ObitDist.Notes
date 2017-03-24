@@ -1,0 +1,34 @@
+To build Obit linux binary distribution for version 561
+
+tar zxf obit-pkg.tar.gz
+cd obit-pkg/rhel6/deps/src/plplot
+./SETUP.plplot
+cd ../../..
+svn co https://github.com/bill-cotton/Obit.git/trunk/ObitSystem src
+./SETUP.Obit
+./SETUP.ObitSD
+./SETUP.ObitTalk
+./SETUP.ObitView
+./rename.sh
+./mkapp version=1.1.561
+cp -p copyFiles/* distro/obit-distro-1.1.561/
+cd distro
+#strip obit-distro-1.1.561/lib/obit/bin/*
+tar cf obit-distro-1.1.561.tar obit-distro-1.1.561
+pigz -p 2 -9 obit-distro-1.1.561.tar
+
+
+# cleanup
+cd deps/src/plplot/plplot-5.8.0
+make clean uninstall
+cd ../../../..
+chmod +w -R src/
+rm -r src
+mkdir src
+rm -r distro/*
+
+
+# Fetch stuff not yet in repository version 561
+scp -p polaris:xfer/Makefile.Obit.lib src/Obit/lib/Makefile
+scp -p polaris:xfer/Makefile.ObitSD.lib src/ObitSD/lib/Makefile
+scp -p polaris:xfer/ObitTalk.in src/ObitTalk/bin/ObitTalk.in

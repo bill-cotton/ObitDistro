@@ -1,0 +1,33 @@
+#!/bin/bash
+
+export VERSION=`cat src/ObitVersion | egrep '^[0-9]' | tail -1 | sed -e 's/^\([0-9][0-9]*\.[0-9][0-9]*\.[0-9][0-9]*\).*/\1/'`
+export majorversion=`echo $VERSION | sed -e "s/^\([0-9][0-9]*\)\..*/\1/"`
+export minorversion=`echo $VERSION | sed -e "s/^[0-9][0-9]*\.\([0-9][0-9]*\)\..*/\1/"`
+echo "VERSION:        $VERSION"
+echo "majorversion:   $majorversion"
+echo "minorversion:   $minorversion"
+echo "SO Version:     $majorversion.$minorversion"
+export prefix=`pwd`
+export deps=${prefix}/deps
+#rm -rf Obit
+#tar zxf Obit.tar.gz
+export OBITSYSTEMPATH=`cd src && pwd`
+
+pushd src/Obit
+cp AIPS/ZOINTD.c src
+sed -i -e 's/@@VER@@/${VERSION}/g' lib/Makefile
+sed -i -e 's/@@SOVER@@/${majorversion}.${minorversion}/g' lib/Makefile
+sed -i -e 's|^#include <xmlrpc_server_abyss.h>||g' include/ObitRPC.h
+PATH=/usr/bin:$PATH
+export OBIT=`pwd`
+### automake et al. look for this...
+echo '#/bin/sh' > missing && echo 'exit 0' >> missing
+CFLAGS=-I/usr/lib64/glib-2.0/include LDFLAGS="-L/usr/lib64 -L${deps}/lib -Wl,-rpath,${prefix}/lib:${deps}/lib:${OBIT}/lib:/save/room/for/obit/runpath/for/later/packaging/of/a/stand/alone/executable/whcih/may/need/room/to/substitute/a/run/path -lpng -lxmlrpc_server -lxmlrpc_abyss -lxml2 -lcfitsio -lxmlrpc -lxmlrpc_util" CURL_CFLAGS=-I/usr/include/curl ./configure --with-plplot=${deps} --enable-shared --prefix=${prefix} --libdir=${prefix}/lib
+#make clean all
+# Dynamic Obit library
+make clean srcupdate
+cd lib;make share; cd ..
+sed -i -e 's#LIBS = ../lib/libObit.a#LIBS = -lObit#g' tasks/Makefile
+sed -i -e 's#../lib/libObit.a# #g' tasks/Makefile
+make taskupdate pythonupdate
+popd

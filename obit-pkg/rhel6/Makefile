@@ -32,7 +32,7 @@
 #----------------------------------------------------
 # Build linux binary distribution of Obit
 # Svn revision number
-ver = 561
+ver = 563
 TARGET := obit-distro-1.1.$(ver).tar
 all: target
 version:
@@ -41,9 +41,6 @@ version:
 target: 
 	cd deps/src/plplot; ./SETUP.plplot
 	svn co https://github.com/bill-cotton/Obit.git/trunk/ObitSystem src
-	scp -p polaris:xfer/Makefile.Obit.lib src/Obit/lib/Makefile
-	scp -p polaris:xfer/Makefile.ObitSD.lib src/ObitSD/lib/Makefile
-	scp -p polaris:xfer/ObitTalk.in src/ObitTalk/bin/ObitTalk.in
 	./SETUP.Obit
 	./SETUP.ObitSD
 	./SETUP.ObitTalk	
@@ -54,7 +51,7 @@ target:
 	cp -p -r deps/lib/plplot5.8.0 distro/obit-distro-1.1.$(ver)/lib/
 	cp -p copyFiles/* distro/obit-distro-1.1.$(ver)/
 	cd distro; tar cf $(TARGET) obit-distro-1.1.$(ver)
-	cd distro; pigz -p 2 -9 obit-distro-1.1.561.tar
+	cd distro; pigz -p 2 -9 $(TARGET)
 
 upload:
 	scp -p distro/$(TARGET).gz smeagle.cv.nrao.edu:/home/svn.cv.nrao.edu/content/obit/linux_distro

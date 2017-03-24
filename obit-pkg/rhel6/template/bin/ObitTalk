@@ -12,6 +12,7 @@ $ENV{PATH} = "$installpath/lib/python";
 $ENV{PYTHONPATH} = "$installpath/share/python";
 $ENV{OBIT_ROOT} = $installpath;
 $ENV{OBITEXEC} = "$installpath/lib/obit/";
+$ENV{PLPLOT_DRV_DIR} = "$installpath/lib/plplot5.8.0/drivers";
 
 exec("$installpath/lib/obit/bin/$binary", @ARGV);
 

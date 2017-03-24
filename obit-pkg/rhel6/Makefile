@@ -34,6 +34,7 @@
 # Svn revision number
 ver = 561
 TARGET := obit-distro-1.1.$(ver).tar
+all: target
 version:
 	echo "ver=$(ver)"
 
@@ -49,10 +50,14 @@ target:
 	./SETUP.ObitView	
 	./rename.sh	
 	./mkapp version=1.1.$(ver)
+	# If plplot version changes, modify template/bin/ObitTalk
+	cp -p -r deps/lib/plplot5.8.0 distro/obit-distro-1.1.$(ver)/lib/
 	cp -p copyFiles/* distro/obit-distro-1.1.$(ver)/
 	cd distro; tar cf $(TARGET) obit-distro-1.1.$(ver)
 	cd distro; pigz -p 2 -9 obit-distro-1.1.561.tar
 
+upload:
+	scp -p distro/$(TARGET).gz smeagle.cv.nrao.edu:/home/svn.cv.nrao.edu/content/obit/linux_distro
 
 update:
 	scp -p polaris:xfer/Makefile.Obit.lib src/Obit/lib/Makefile

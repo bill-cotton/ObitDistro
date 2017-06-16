@@ -9,7 +9,7 @@ AIPS_VERSION = "31DEC17/"
 DA00         = "/export/data/aips/DA00/PANTHER"
 # Define OBIT_EXEC for access to Obit Software 
 OBIT_EXEC    = None  # (def /usr/lib/obit/bin)
-OBIT_EXEC    = "/export/data/users/bcotton/GitTest/obit-bcotton-1.1.561/lib/obit/"
+OBIT_EXEC    = "/export/data/users/bcotton/GitTest/obit-bcotton-1.1.567/lib/obit/"
 
 # Define AIPS directories (URL, disk name)
 # URL = None for local disks

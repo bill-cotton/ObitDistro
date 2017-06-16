@@ -32,7 +32,7 @@
 #----------------------------------------------------
 # Build linux binary distribution of Obit
 # Svn revision number
-ver = 563
+ver = 567
 TARGET := obit-distro-1.1.$(ver).tar
 all: target
 version:

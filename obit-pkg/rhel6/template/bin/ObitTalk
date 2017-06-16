@@ -7,12 +7,12 @@ $installpath = abs_path(dirname(abs_path($0)) . "/..");
 $path        = normalize_path($installpath,$0);
 $binary      = basename($path);
 
-$ENV{PATH} = "$installpath/lib/obit/bin:$ENV{PATH}";
-$ENV{PATH} = "$installpath/lib/python";
-$ENV{PYTHONPATH} = "$installpath/share/python";
+$ENV{PATH} = "$installpath/lib/obit/bin:$installpath/lib/python:$ENV{PATH}";
+$ENV{PYTHONPATH} = "$installpath/share/python:$ENV{PYTHONPATH}";
 $ENV{OBIT_ROOT} = $installpath;
 $ENV{OBITEXEC} = "$installpath/lib/obit/";
 $ENV{PLPLOT_DRV_DIR} = "$installpath/lib/plplot5.8.0/drivers";
+$ENV{LD_LIBRARY_PATH} = "$installpath/lib:$ENV{LD_LIBRARY_PATH}";
 
 exec("$installpath/lib/obit/bin/$binary", @ARGV);
 

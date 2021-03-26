@@ -1,6 +1,6 @@
 # $Id$
 #-----------------------------------------------------------------------
-#;  Copyright (C) 2017
+#;  Copyright (C) 2019,2020
 #;  Associated Universities, Inc. Washington DC, USA.
 #;
 #;  This program is free software; you can redistribute it and/or
@@ -31,8 +31,9 @@
 #
 #----------------------------------------------------
 # Build linux binary distribution of Obit
-# Svn revision number
-ver = 567
+# Modified for Python3 build
+# Svn revision number, also fix readme and dot.obitrc.py in copyFiles
+ver = 630
 TARGET := obit-distro-1.1.$(ver).tar
 all: target
 version:
@@ -40,9 +41,10 @@ version:
 
 target: 
 	cd deps/src/plplot; ./SETUP.plplot
+	# may have to rm -r src
 	svn co https://github.com/bill-cotton/Obit.git/trunk/ObitSystem src
 	./SETUP.Obit
-	./SETUP.ObitSD
+	#./SETUP.ObitSD
 	./SETUP.ObitTalk	
 	./SETUP.ObitView	
 	./rename.sh	
@@ -50,6 +52,7 @@ target:
 	# If plplot version changes, modify template/bin/ObitTalk
 	cp -p -r deps/lib/plplot5.8.0 distro/obit-distro-1.1.$(ver)/lib/
 	cp -p copyFiles/* distro/obit-distro-1.1.$(ver)/
+	cp -p copyFiles/ObitTalk3 distro/obit-distro-1.1.$(ver)/lib/obit/bin/
 	cd distro; tar cf $(TARGET) obit-distro-1.1.$(ver)
 	cd distro; pigz -p 2 -9 $(TARGET)
 

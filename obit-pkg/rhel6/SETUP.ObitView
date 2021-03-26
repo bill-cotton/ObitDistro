@@ -32,4 +32,5 @@ CFLAGS=-I/usr/lib64/glib-2.0/include LDFLAGS="-L/usr/lib64 -L${deps}/lib -L${OBI
 make clean all
 mkdir -p bin
 cp ObitView bin
+cp ObitMess bin
 popd

@@ -12,14 +12,14 @@ $rename src/Obit/python/Makefile
 $rename src/Obit/python/setupdata.py
 $rename src/Obit/python/setup.py
 
-$rename src/ObitSD/config.log
-$rename src/ObitSD/config.status
-$rename src/ObitSD/Makefile
-$rename src/ObitSD/src/Makefile
-$rename src/ObitSD/tasks/Makefile
-$rename src/ObitSD/python/Makefile
-$rename src/ObitSD/python/setupdata.py
-$rename src/ObitSD/python/setup.py
+###$rename src/ObitSD/config.log
+###$rename src/ObitSD/config.status
+###$rename src/ObitSD/Makefile
+###$rename src/ObitSD/src/Makefile
+###$rename src/ObitSD/tasks/Makefile
+###$rename src/ObitSD/python/Makefile
+###$rename src/ObitSD/python/setupdata.py
+###$rename src/ObitSD/python/setup.py
 
 $rename src/ObitTalk/config.status
 $rename src/ObitTalk/config.log
